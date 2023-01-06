@@ -25,7 +25,7 @@
             <Label FontSize="Large"
                    HorizontalOptions="Center"
                    TextColor="#F24236"
-                   Text="You lost!"/>
+                   Text="{Binding Message}"/>
             <Button Text="Reset"
                     FontSize="20"
                     FontAttributes="Bold"
@@ -45,9 +45,9 @@
                      <Button HeightRequest="50"
                     WidthRequest="50"
                     Text="{Binding .}"
-                    BackgroundColor="#4C5F6B"
                     TextColor="#44FFD2"
-                    Margin="2"/>
+                    Margin="2"
+                    Clicked="Button_Clicked"/>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
            

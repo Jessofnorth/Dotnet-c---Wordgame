@@ -8,20 +8,20 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 {
     //
     #region UI
+    //create string to contain the guesses
     public string Highlight
     {
         get => highlight;
         set
         {
-            //get/set for the state of the guessed word, updates when the property changes
-            //when a new char is guessed.
             highlight = value;
             OnPropertyChanged();
         }
     }
 
     //create list for the letter buttons
-    public List<Char> Letters {
+    public List<Char> Letters
+    {
         get => letters;
 
         set
@@ -30,6 +30,17 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+    //property for message to player 
+    public string Message
+    {
+        get => message;
+        set
+        {
+            message = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
 
@@ -62,6 +73,7 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 
     //the list for the letters list
     private List<char> letters = new();
+    private string message;
 
 
     #endregion
@@ -86,12 +98,14 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
     }
 
     #region Game
+    //randomly chooses word from list 
     private void WordPicker()
     {
         //choose a random word in the list and set to answer property
         answer = words[new Random().Next(0, words.Count)];
     }
 
+    //check if the guessed char(s) is in answer
     private void CheckGuess(string answer, List<char> guessedChars)
     {
         //get the random word, answer. Then check all the guessed chars in list, user input, to match word
@@ -101,7 +115,55 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
         Highlight = string.Join(' ', temp);
 
     }
+
+    //method that processes guess from btn
+    private void ProcessGuess(char letter)
+    {
+        //check if letter has been selected before.
+        // -1 indicates it has not 
+        if (guesses.IndexOf(letter) == -1)
+        {
+            guesses.Add(letter);
+        }
+        //check if letter is a match to answer word
+        if (answer.IndexOf(letter) >= 0)
+        {
+            CheckGuess(answer, guesses);
+            GameWon();
+        }
+    }
+
+    //check if the complete answer is guessed and the game won
+    private void GameWon()
+    {
+        //check if property, minus empty spaces, is equal to answer
+        //if so the game is won
+        if (Highlight.Replace(" ", "") == answer)
+        {
+            Message = "Great job! You won!";
+        }
+    }
+
     #endregion
+
+    //eventhandler for the letter buttons 
+    void Button_Clicked(System.Object sender, System.EventArgs e)
+    {
+        //get the event from pressed button, sender, and save to variable
+        var btn = sender as Button;
+        //if the btn is not null
+        if (btn != null)
+        {
+            //get the letter and save to variable 
+            var letter = btn.Text;
+            //disable button
+            btn.IsEnabled = false;
+            //call function to process guess
+            ProcessGuess(letter[0]);
+        }
+    }
+
+
 }
 
 
