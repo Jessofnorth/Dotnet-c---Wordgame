@@ -35,13 +35,22 @@
                     TextColor="#44FFD2"/>
         </VerticalStackLayout>
     <FlexLayout Grid.Row="1" Wrap="Wrap" Margin="10"
-                JustifyContent="SpaceEvenly">
-            <Button HeightRequest="50"
+                JustifyContent="SpaceEvenly"
+                BindableLayout.ItemsSource="{Binding Letters}">
+            <!--Create a bindable template for the char buttons
+            it will print all the buttons as a loop instead of manually creating an element for
+            each letter-->
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                     <Button HeightRequest="50"
                     WidthRequest="50"
-                    Text="A"
+                    Text="{Binding .}"
                     BackgroundColor="#4C5F6B"
                     TextColor="#44FFD2"
                     Margin="2"/>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+           
             
 
     </FlexLayout>

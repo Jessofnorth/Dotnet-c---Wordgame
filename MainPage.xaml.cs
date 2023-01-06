@@ -19,9 +19,20 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
+    //create list for the letter buttons
+    public List<Char> Letters {
+        get => letters;
+
+        set
+        {
+            letters = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
-    
+
     #region Words
     //the anser property, the word to guess
     string answer = "";
@@ -48,13 +59,21 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 
     //list with the guessed chars
     List<char> guesses = new();
-    #endregion 
-  
+
+    //the list for the letters list
+    private List<char> letters = new();
+
+
+    #endregion
+
 
 
     public MainPage()
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
+
+        //fill letters to list of letter buttons with add range method
+        Letters.AddRange("abcdefghijklmnopqrstuvwxyz");
 
         //Set data binding context to this file
         BindingContext = this;
@@ -64,14 +83,13 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 
         //run the check guess method to match the answer to the guessed chars
         CheckGuess(answer, guesses);
-	}
+    }
 
     #region Game
     private void WordPicker()
     {
         //choose a random word in the list and set to answer property
         answer = words[new Random().Next(0, words.Count)];
-        Debug.WriteLine(answer);
     }
 
     private void CheckGuess(string answer, List<char> guessedChars)
