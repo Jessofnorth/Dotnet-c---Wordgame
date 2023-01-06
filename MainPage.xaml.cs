@@ -40,6 +40,16 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+    //property for the display of number of mistakes left 
+    public string Status
+    {
+        get => status;
+        set
+        {
+            status = value;
+            OnPropertyChanged();
+        }
+    }
 
     #endregion
 
@@ -73,7 +83,13 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 
     //the list for the letters list
     private List<char> letters = new();
+    //property for displaying messages
     private string message;
+    //proprety for counting wrong guesses and max wrong guesses
+    int wrongGuess = 0;
+    int maxWrongGuess = 10;
+    //property for status of game, number of wrong guesses
+    private string status;
 
 
     #endregion
@@ -131,8 +147,15 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
             CheckGuess(answer, guesses);
             GameWon();
         }
+        else if (answer.IndexOf(letter) == -1)
+        {
+            wrongGuess++;
+            StatusUpdate();
+            GameLost();
+        }
     }
 
+    
     //check if the complete answer is guessed and the game won
     private void GameWon()
     {
@@ -142,6 +165,21 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
         {
             Message = "Great job! You won!";
         }
+    }
+
+    private void GameLost()
+    {
+        if(wrongGuess == maxWrongGuess)
+        {
+            Message = "You lost!";
+        }
+    }
+
+
+    //method for checking number of guesses that are left and displaying to player
+    public void StatusUpdate()
+    {
+        Status = $"Mistakes: {wrongGuess} of {maxWrongGuess}";
     }
 
     #endregion

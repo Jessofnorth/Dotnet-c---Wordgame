@@ -15,8 +15,8 @@
                    FontSize="18"
                    TextColor="#44FFD2"
                    HorizontalOptions="Center"
-                   Text="Mistakes: 0 of 10"/>
-            <Image Source="one.png" HeightRequest="200" />
+                   Text="{Binding Status}"/>
+            <Image Source="zero.png" HeightRequest="200" />
             <Label FontSize="40"
                    HorizontalOptions="Center"
                    Text="{Binding Highlight}"
