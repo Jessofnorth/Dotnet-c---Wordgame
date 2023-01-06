@@ -5,16 +5,46 @@
              BackgroundColor="#2B3D41">
 
     <Grid RowDefinitions=".6*, .4*">
-        <VerticalStackLayout>
+        <VerticalStackLayout Spacing="10" Padding="10">
+              <Label FontAttributes="Bold"
+                   FontSize="25"
+                   TextColor="#44FFD2"
+                   HorizontalOptions="Center"
+                   Text="Guess the animal!"/>
             <Label FontAttributes="Bold"
                    FontSize="18"
                    TextColor="#44FFD2"
-                   Padding="10"
                    HorizontalOptions="Center"
                    Text="Mistakes: 0 of 10"/>
-
+            <Image Source="one.png" HeightRequest="200" />
+            <Label FontSize="40"
+                   HorizontalOptions="Center"
+                   Text="_ _ _ _"
+                   VerticalOptions="Center"
+                   TextColor="#44FFD2"/>
+            <Label FontSize="Large"
+                   HorizontalOptions="Center"
+                   TextColor="#F24236"
+                   Text="You lost!"/>
+            <Button Text="Reset"
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    WidthRequest="120"
+                    BackgroundColor="#4C5F6B"
+                    TextColor="#44FFD2"/>
         </VerticalStackLayout>
+    <FlexLayout Grid.Row="1" Wrap="Wrap" Margin="10"
+                JustifyContent="SpaceEvenly">
+            <Button HeightRequest="50"
+                    WidthRequest="50"
+                    Text="A"
+                    BackgroundColor="#4C5F6B"
+                    TextColor="#44FFD2"
+                    Margin="2"/>
+            
 
+    </FlexLayout>
     </Grid>
 
 </ContentPage>
