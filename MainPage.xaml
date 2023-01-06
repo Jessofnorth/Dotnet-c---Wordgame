@@ -19,7 +19,7 @@
             <Image Source="one.png" HeightRequest="200" />
             <Label FontSize="40"
                    HorizontalOptions="Center"
-                   Text="_ _ _ _"
+                   Text="{Binding Highlight}"
                    VerticalOptions="Center"
                    TextColor="#44FFD2"/>
             <Label FontSize="Large"
