@@ -3,39 +3,71 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Wordgame.MainPage"
              BackgroundColor="#2B3D41">
+    <ContentPage.Resources>
+        <!--Colors-->
+        <Color x:Key="Primary">#44FFD2</Color>
+        <Color x:Key="Secondary">#4C5F6B</Color>
+        <Color x:Key="Error">#F24236</Color>
+        <Color x:Key="Background">#2B3D41</Color>
+        <!--Styles-->
+        <Style TargetType="Button">
+            <Setter Property="TextColor" Value="{StaticResource Primary}" />
+            <Setter Property="BackgroundColor" Value="{StaticResource Secondary}" />
+            <Setter Property="MinimumHeightRequest" Value="50"/>
+            <Setter Property="MinimumWidthRequest" Value="50"/>
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="{StaticResource Background}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
 
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource Primary}" />
+        </Style>
+        <Style TargetType="Label" x:Key="ErrorLabel">
+            <Setter Property="TextColor" Value="{StaticResource Error}" />
+        </Style>
+
+        <Style TargetType="Page" ApplyToDerivedTypes="True">
+            <Setter Property="BackgroundColor" Value="{StaticResource Background}" />
+        </Style>
+    </ContentPage.Resources>
+    <!--Grid with the content of ppage. Bindings to code behind -->
     <Grid RowDefinitions=".6*, .4*">
         <VerticalStackLayout Spacing="10" Padding="10">
-              <Label FontAttributes="Bold"
+            <Label FontAttributes="Bold"
                    FontSize="25"
-                   TextColor="#44FFD2"
                    HorizontalOptions="Center"
                    Text="Guess the animal!"/>
             <Label FontAttributes="Bold"
                    FontSize="18"
-                   TextColor="#44FFD2"
                    HorizontalOptions="Center"
                    Text="{Binding Status}"/>
             <Image Source="{Binding Image}" HeightRequest="200" />
             <Label FontSize="40"
                    HorizontalOptions="Center"
                    Text="{Binding Highlight}"
-                   VerticalOptions="Center"
-                   TextColor="#44FFD2"/>
+                   VerticalOptions="Center"/>
             <Label FontSize="Large"
                    HorizontalOptions="Center"
-                   TextColor="#F24236"
+                   Style="{StaticResource ErrorLabel}"
                    Text="{Binding Message}"/>
             <Button Text="Reset"
                     FontSize="20"
                     FontAttributes="Bold"
                     HorizontalOptions="Center"
                     WidthRequest="120"
-                    BackgroundColor="#4C5F6B"
-                    TextColor="#44FFD2"
                     Clicked="Reset_Clicked"/>
         </VerticalStackLayout>
-    <FlexLayout Grid.Row="1" Wrap="Wrap" Margin="10"
+        <FlexLayout Grid.Row="1" Wrap="Wrap" Margin="10"
                 JustifyContent="SpaceEvenly"
                 BindableLayout.ItemsSource="{Binding Letters}"
                 x:Name="LetterBtns">
@@ -44,18 +76,16 @@
             each letter-->
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
-                     <Button HeightRequest="50"
-                    WidthRequest="50"
+                    <Button 
                     Text="{Binding .}"
-                    TextColor="#44FFD2"
                     Margin="2"
                     Clicked="Button_Clicked"/>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
-           
-            
 
-    </FlexLayout>
+
+
+        </FlexLayout>
     </Grid>
 
 </ContentPage>
