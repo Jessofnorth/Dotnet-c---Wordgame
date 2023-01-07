@@ -51,6 +51,17 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
         }
     }
 
+    //property for the imag name based on number of mistakes  
+    public string Image
+    {
+        get => image;
+        set
+        {
+            image = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
 
@@ -90,6 +101,8 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
     int maxWrongGuess = 10;
     //property for status of game, number of wrong guesses
     private string status;
+    //propertry of image nam
+    private string image = "zero.png"; 
 
 
     #endregion
@@ -149,13 +162,62 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
         }
         else if (answer.IndexOf(letter) == -1)
         {
+            //add to wrong guesses counter, update status, check if game is lost, change image
             wrongGuess++;
             StatusUpdate();
             GameLost();
+            SetImage();
+        }
+    }
+    //set the name of the image based on number of mistakes.
+    //since Apple divices dont support namnes with numbers, useing a switch case.
+    private void SetImage()
+    {
+        switch(wrongGuess)
+        {
+            case 1:
+                Image = "one.png";
+                break;
+
+            case 2:
+                Image = "two.png";
+                break;
+
+            case 3:
+                Image = "three.png";
+                break;
+
+            case 4:
+                Image = "four.png";
+                break;
+
+            case 5:
+                Image = "five.png";
+                break;
+
+            case 6:
+                Image = "six.png";
+                break;
+
+            case 7:
+                Image = "seven.png";
+                break;
+
+            case 8:
+                Image = "eight.png";
+                break;
+
+            case 9:
+                Image = "nine.png";
+                break;
+
+            case 10:
+                Image = "ten.png";
+                break;
         }
     }
 
-    
+
     //check if the complete answer is guessed and the game won
     private void GameWon()
     {
@@ -164,14 +226,40 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
         if (Highlight.Replace(" ", "") == answer)
         {
             Message = "Great job! You won!";
+            DisableBtns();
         }
     }
-
+    //check if game is lost, disavle btns and prin message 
     private void GameLost()
-    {
+    {//if player has guesse the max number of times they lose
         if(wrongGuess == maxWrongGuess)
         {
             Message = "You lost!";
+            DisableBtns();
+        }
+    }
+    //disable btns when los/won
+    private void DisableBtns()
+    {
+        foreach (var child in LetterBtns.Children)
+        {
+            var btn = child as Button;
+            if(btn != null)
+            {
+                btn.IsEnabled = false;
+            }
+        }
+    }
+    //enable btns when reset
+    private void EnableBtns()
+    {
+        foreach (var child in LetterBtns.Children)
+        {
+            var btn = child as Button;
+            if (btn != null)
+            {
+                btn.IsEnabled = true;
+            }
         }
     }
 
@@ -200,7 +288,18 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
             ProcessGuess(letter[0]);
         }
     }
-
+    //when reset btn clicked reset game with new word 
+    void Reset_Clicked(System.Object sender, System.EventArgs e)
+    {
+        wrongGuess = 0;
+        guesses = new();
+        Image = "zero.png";
+        WordPicker();
+        CheckGuess(answer, guesses);
+        Message = "";
+        StatusUpdate();
+        EnableBtns();
+    }
 
 }
 

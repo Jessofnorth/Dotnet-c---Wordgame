@@ -16,7 +16,7 @@
                    TextColor="#44FFD2"
                    HorizontalOptions="Center"
                    Text="{Binding Status}"/>
-            <Image Source="zero.png" HeightRequest="200" />
+            <Image Source="{Binding Image}" HeightRequest="200" />
             <Label FontSize="40"
                    HorizontalOptions="Center"
                    Text="{Binding Highlight}"
@@ -32,11 +32,13 @@
                     HorizontalOptions="Center"
                     WidthRequest="120"
                     BackgroundColor="#4C5F6B"
-                    TextColor="#44FFD2"/>
+                    TextColor="#44FFD2"
+                    Clicked="Reset_Clicked"/>
         </VerticalStackLayout>
     <FlexLayout Grid.Row="1" Wrap="Wrap" Margin="10"
                 JustifyContent="SpaceEvenly"
-                BindableLayout.ItemsSource="{Binding Letters}">
+                BindableLayout.ItemsSource="{Binding Letters}"
+                x:Name="LetterBtns">
             <!--Create a bindable template for the char buttons
             it will print all the buttons as a loop instead of manually creating an element for
             each letter-->
