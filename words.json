@@ -1,4 +1,19 @@
-﻿{
-
-}
-
+﻿[
+  { "animal": "lion" },
+  { "animal": "hippopotamus" },
+  { "animal": "giraffe" },
+  { "animal": "elephant" },
+  { "animal": "cat" },
+  { "animal": "dog" },
+  { "animal": "moose" },
+  { "animal": "raindeer" },
+  { "animal": "bear" },
+  { "animal": "wolf" },
+  { "animal": "penguin" },
+  { "animal": "whale" },
+  { "animal": "hamster" },
+  { "animal": "rabbit" },
+  { "animal": "fox" },
+  { "animal": "pig" },
+  { "animal": "cow" }
+]

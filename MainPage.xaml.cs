@@ -1,6 +1,10 @@
 ﻿using System.ComponentModel;
 using System;
 using System.Diagnostics;
+using System.Text.Json;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
+using Wordgame.Models;
 
 namespace Wordgame;
 
@@ -8,7 +12,7 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 {
     //
     #region UI
-    //create string to contain the guesses
+    //get/set string to contain the guesses
     public string Highlight
     {
         get => highlight;
@@ -19,7 +23,7 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
         }
     }
 
-    //create list for the letter buttons
+    //get/set list for the letter buttons
     public List<Char> Letters
     {
         get => letters;
@@ -30,7 +34,7 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    //property for message to player 
+    //get/set for message to player 
     public string Message
     {
         get => message;
@@ -40,7 +44,7 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    //property for the display of number of mistakes left 
+    //get/set for the display of number of mistakes left 
     public string Status
     {
         get => status;
@@ -51,7 +55,7 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
         }
     }
 
-    //property for the imag name based on number of mistakes  
+    //get/set for the imag name based on number of mistakes  
     public string Image
     {
         get => image;
@@ -61,37 +65,18 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-
     #endregion
 
 
     #region Words
     //the anser property, the word to guess
     string answer = "";
-
     //the property for the string with guessed chars and _
     private string highlight;
-
-    //add the list of words for the game 
-    List<string> words = new()
-    {
-        "lion",
-        "hippopotamus",
-        "giraffe",
-        "elephant",
-        "cat",
-        "dog",
-        "moose",
-        "raindeer",
-        "bear",
-        "wolf",
-        "penguin",
-        "hamster"
-    };
-
+    //create list of strings to save word list into
+    private List<string> words = new();
     //list with the guessed chars
     List<char> guesses = new();
-
     //the list for the letters list
     private List<char> letters = new();
     //property for displaying messages
@@ -102,8 +87,9 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
     //property for status of game, number of wrong guesses
     private string status;
     //propertry of image nam
-    private string image = "zero.png"; 
-
+    private string image = "zero.png";
+    //property of model FileWords
+    private List<FileWords> fileWords = new();
 
     #endregion
 
@@ -119,6 +105,9 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
         //Set data binding context to this file
         BindingContext = this;
 
+        //get words from file
+        getWords();
+
         //run the Word picker method for a word to guess
         WordPicker();
 
@@ -127,11 +116,26 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
     }
 
     #region Game
+    
+    public void getWords()
+    {
+        if (File.Exists(@"words.json") == true)
+        {
+            string jsonString = File.ReadAllText(@"words.json");
+            fileWords = JsonSerializer.Deserialize<List<FileWords>>(jsonString); ;
+            foreach(var x in fileWords)
+            {
+                words.Add(x.animal);
+            }
+           
+            
+        };
+    }
     //randomly chooses word from list 
     private void WordPicker()
     {
         //choose a random word in the list and set to answer property
-        answer = words[new Random().Next(0, words.Count)];
+        answer = words[new Random().Next(0, fileWords.Count)];
     }
 
     //check if the guessed char(s) is in answer

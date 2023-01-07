@@ -54,8 +54,12 @@
 
 	<ItemGroup>
 	  <None Remove="EmptyJSONFile.json" />
+	  <None Remove="Models\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <BundleResource Include="words.json" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Models\" />
 	</ItemGroup>
 </Project>
