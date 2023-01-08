@@ -82,11 +82,7 @@
                     Clicked="Button_Clicked"/>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
-
-
-
         </FlexLayout>
     </Grid>
-
 </ContentPage>
 

@@ -10,8 +10,9 @@ namespace Wordgame;
 
 public partial class MainPage : ContentPage, INotifyPropertyChanged
 {
-    //
+    
     #region UI
+    //onpropertycanged notifys that the property has ben updated
     //get/set string to contain the guesses
     public string Highlight
     {
@@ -88,7 +89,7 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
     private string status;
     //propertry of image nam
     private string image = "zero.png";
-    //property of model FileWords
+    //list of model FileWords
     private List<FileWords> fileWords = new();
 
     #endregion
@@ -119,10 +120,14 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
     
     public void getWords()
     {
+        //get words from file if it exists, if it dosent the app crashes
         if (File.Exists(@"words.json") == true)
         {
+            //read the content of file to string
             string jsonString = File.ReadAllText(@"words.json");
+            //deserialise into list with FileWordsmodel as base
             fileWords = JsonSerializer.Deserialize<List<FileWords>>(jsonString); ;
+            //loop to add each animal to new string list so the game can handle the data
             foreach(var x in fileWords)
             {
                 words.Add(x.animal);
