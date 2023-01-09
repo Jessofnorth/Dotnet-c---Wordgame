@@ -95,7 +95,7 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
     #endregion
 
 
-
+    //constructor
     public MainPage()
     {
         InitializeComponent();
@@ -126,14 +126,12 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
             //read the content of file to string
             string jsonString = File.ReadAllText(@"words.json");
             //deserialise into list with FileWordsmodel as base
-            fileWords = JsonSerializer.Deserialize<List<FileWords>>(jsonString); ;
+            fileWords = JsonSerializer.Deserialize<List<FileWords>>(jsonString); 
             //loop to add each animal to new string list so the game can handle the data
             foreach(var x in fileWords)
             {
                 words.Add(x.animal);
             }
-           
-            
         };
     }
     //randomly chooses word from list 
@@ -169,6 +167,7 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
             CheckGuess(answer, guesses);
             GameWon();
         }
+        //if letter is not a match to answer
         else if (answer.IndexOf(letter) == -1)
         {
             //add to wrong guesses counter, update status, check if game is lost, change image
